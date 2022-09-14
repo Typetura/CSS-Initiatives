@@ -11,7 +11,6 @@ This is a prioritized list of CSS modules that have been specced but are not imp
     - The NYTimes has a [popular text balancer](https://github.com/nytimes/text-balancer). At Vox Media we inserted non-breaking spaces at the end of headlines to avoid egregiously unbalanced text. Having this built into browsers would make headlines look much better across the web.
 1. [Text-justify](https://developer.mozilla.org/en-US/docs/Web/CSS/text-justify)*
     - I suggest adding a flexbox-style part to this spec where one can control how much word spacing, letter spacing, and font stretch go into the algorithm.
-    - Text-justify: 1 1 1; where each number indicates the proportion of word spacing, letter spacing, and font stretch.
     - [Issue on GitHub](https://github.com/w3c/csswg-drafts/issues/7738)
 1. [Hyphens](https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens)*
     - Currently this is English only and requires a prefix.
