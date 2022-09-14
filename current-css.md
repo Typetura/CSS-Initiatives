@@ -18,8 +18,8 @@ This is a prioritized list of CSS modules that have been specced but are not imp
     - Baseline grids in CSS are helpful to keep text across multiple columns cleanly aligned.
     - Note [this issue with the headline examples in the spec](https://github.com/w3c/csswg-drafts/issues/6025).
 1. [Initial Letters](https://www.w3.org/TR/css-inline/#initial-letter-styling)
-    - ~~If I were to add something here, it would be padding of n lines of padding around an initial letter.
-    - ~~[Issue on Github](https://github.com/w3c/csswg-drafts/issues/7739)
+    - ~~If I were to add something here, it would be padding of n lines of padding around an initial letter.~~
+    - ~~[Issue on Github](https://github.com/w3c/csswg-drafts/issues/7739)~~
 1. [Leading/trailing trim](https://css-tricks.com/leading-trim-the-future-of-digital-typesetting/)
     - Helpful to align the first or last line of text with the container or other content on the page.
 
@@ -36,4 +36,4 @@ This is a prioritized list of CSS modules that have been specced but are not imp
 - [Interpolation between breakpoints](https://github.com/w3c/csswg-drafts/issues/6245) (fluid type)
 - [Query page zoom to compensate for text sizing adjustments](https://github.com/w3c/csswg-drafts/issues/6869) (Accessibility with fluid type)
 - [Control justification settings](https://github.com/w3c/csswg-drafts/issues/7738)
-- ~~[Initial letter padding](https://github.com/w3c/csswg-drafts/issues/7739)
+- ~~[Initial letter padding](https://github.com/w3c/csswg-drafts/issues/7739)~~
