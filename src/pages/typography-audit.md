@@ -1,3 +1,7 @@
+---
+layout: /src/layouts/Default.astro
+---
+
 # Typographic CSS Audit
 
 ## Has spec but not consistently implemented
