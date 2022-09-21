@@ -1,0 +1,10 @@
+h1, h2, h3 {
+    animation:
+        1s // Duration
+        var(--tt-ease, linear) // Easing function
+        calc(-1s * var(--bind, 800) / var(--tt-max, 800)) // Where in the timeline the properties should render
+        1 // Repeat once
+        both // Extend the animation in both directions
+        paused // Do not play this animation
+        var(--tt-key, none) // Keyframe binding
+}

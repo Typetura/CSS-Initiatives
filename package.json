@@ -14,6 +14,7 @@
     "astro": "^1.2.6"
   },
   "devDependencies": {
+    "astro-xelement": "^3.2.0",
     "sass": "^1.54.9"
   }
 }

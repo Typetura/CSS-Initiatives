@@ -4,6 +4,9 @@ import '../styles/styles.scss';
 import Head from "../components/Head.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+import XElement from 'astro-xelement'
+const { Main } = XElement
 ---
 
 <!DOCTYPE html>
@@ -11,9 +14,15 @@ import Footer from "../components/Footer.astro";
     <Head />
 <body>
     <Header />
-    <main>
+
+    <XElement @is="main"
+        @resize={element => {
+            element.target.style.setProperty('--bind', element.target.clientWidth)
+        }}          
+    >
         <slot />
-    </main>
+    </XElement>
+
     <Footer />
 </body>
 </html>
