@@ -2,18 +2,21 @@
     --c-hue: -20deg;
     --c-primary: hsl(var(--c-hue) 100% 25%);
     --c-action: hsl(var(--c-hue) 100% 60%);
-    --c-subdued: hsl(var(--c-hue) 10% 85%);
+    --c-subdued: hsl(var(--c-hue) 10% 90%);
     color: #000;
 
     --text: Literata, serif;
-    --headline: Syne, sans-serif;
+    --headline: 'Big Shoulders Display', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+
+    --transition: 0.2s ease-in-out;
 
     font-family: var(--text);
-    line-height: 1.3;
-    font-size: calc(18 / 16 * 100%);
+    line-height: 1.425;
+    font-size: calc(20 / 16 * 100%);
     --tt-key: root;
     --tt-ease: ease-out;
-    --tt-max: 800;
+    --tt-max: 400;
 }
 @keyframes root {
     0% {
@@ -30,14 +33,25 @@ body {
     max-width: 70ch;
 }
 
+* {
+    font: inherit;
+    text-decoration-thickness: 0.075em;
+    text-underline-offset: 0.11em;
+}
+
+:focus {
+    outline: 0.2rem solid var(--c-action);
+    outline-offset: 0.2rem;
+    border-radius: 0.2rem;
+}
+
 a {
     color: inherit;
     text-decoration-color: var(--c-primary);
-    text-decoration-thickness: 0.075em;
-    text-underline-offset: 0.11em;
-    transition: text-decoration 0.25s ease-in-out;
+    transition: text-decoration var(--transition);
     &[href*="http"]::after {
-        transition: all 0.25s ease-in-out;
+        font-size: 0.8em;
+        transition: all var(--transition);
         display: inline-block;
         content: '⇱';
         transform: scalex(-100%) translatey(-0.4em);
@@ -58,36 +72,26 @@ a {
     }
 }
 
-:focus {
-    outline: 0.2rem solid var(--c-action);
-    outline-offset: 0.2rem;
-    border-radius: 0.2rem;
-}
-
 // Typographic styles
-
-* {
-    font: inherit;
-}
-
 p {
-    margin-block: 0.25em;
+    margin-block: 0.5em;
 }
 
 h1 {
     color: var(--c-primary);
     font-family: var(--headline);
-    font-size: 3rem;
-    line-height: 1;
-    font-weight: 800;
-    margin-block: 2em 1em;
-    --tt-key: h1;
+    font-size: 6rem;
+    line-height: 1.1;
+    font-weight: 900;
+    margin-block: 1em 1rem;
+    --tt-max: 730;
     --tt-ease: ease-in;
+    --tt-key: h1;
 }
 @keyframes h1 {
     0% {
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 800;
     }
 }
 
@@ -103,10 +107,54 @@ h2 {
 h3 {
     color: var(--c-primary);
     font-family: var(--headline);
-    font-weight: 400;
-    font-size: 1.2rem;
+    font-weight: 600;
+    font-size: 1.4rem;
     line-height: 1.2;
     margin-block: 1em 0.25rem;
+}
+
+code {
+    background-color: hsl(var(--c-hue) 0% 97%);
+    color: var(--c-primary);
+    border-radius: 0.2em;
+    font-family: var(--mono);
+    font-weight: 500;
+    outline: 0.2em solid hsl(var(--c-hue) 0% 97%);
+    margin-inline: 0.3em;
+    font-size: 0.9em;
+}
+
+del {
+    --c-hue: -10deg;
+    border-radius: 0.2em;
+    padding-inline: 0.1em;
+    background-color: hsl(var(--c-hue) 100% 97%);
+    outline: 0.2em solid hsl(var(--c-hue) 100% 97%);
+    outline-offset: -0.1rem;
+    transition: all var(--transition);
+    color: hsl(var(--c-hue) 70% 80%);
+    text-decoration-color: hsl(var(--c-hue) 70% 80%);
+    &:hover {
+        color: hsl(var(--c-hue) 70% 20%);
+        text-decoration-color: hsla(var(--c-hue), 100%, 60%, 0.2);
+    }
+    a:visited {
+        text-decoration-color: hsl(var(--c-hue) 70% 80%);
+    }
+}
+ins {
+    --c-hue: 160deg;
+    border-radius: 0.2em;
+    padding-inline: 0.1em;
+    background-color: hsl(var(--c-hue) 100% 97%);
+    outline: 0.2em solid hsl(var(--c-hue) 100% 97%);
+    outline-offset: -0.1rem;
+    transition: all var(--transition);
+    color: hsl(var(--c-hue) 80% 25%);
+    text-decoration-color: hsl(var(--c-hue) 90% 40%);
+    &:hover {
+        color: hsl(var(--c-hue) 90% 5%);
+    }
 }
 
 hr {

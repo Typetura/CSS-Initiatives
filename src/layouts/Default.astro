@@ -6,7 +6,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
 import XElement from 'astro-xelement'
-const { Main } = XElement
 ---
 
 <!DOCTYPE html>
@@ -24,5 +23,14 @@ const { Main } = XElement
     </XElement>
 
     <Footer />
+
+    <script>
+        const root = document.documentElement;
+        function rootSize() {
+            root.style.setProperty('--bind', window.innerWidth);
+        }
+
+        window.onresize = rootSize;
+    </script>
 </body>
 </html>
