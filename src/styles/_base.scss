@@ -71,7 +71,7 @@ a {
         transition: all var(--transition);
         display: inline-block;
         content: '⇱';
-        transform: scalex(-100%) translatey(-0.4em);
+        transform: scalex(-100%) translatey(-0.5em);
         color: var(--c-primary);
         margin-inline-start: 0.1em;
         @media print {
@@ -92,6 +92,7 @@ a {
         text-decoration-color: var(--c-action);
         &[href*="http"]::after {
             color: var(--c-action);
+            transform: scalex(-100%) translatey(-0.6em);
         }
     }
 }
