@@ -35,6 +35,8 @@ This is a prioritized list of CSS modules that have been specced but are not imp
 - `-webkit-text-stroke`: implemented in all major browsers but doesn’t have an official spec. [The -webkit-text-stroke compatibility standard can be found here](https://compat.spec.whatwg.org/#the-webkit-text-stroke).
   - When codifying into an official spec, please [note the issues with outline overlaps that are common in variable fonts](https://github.com/google/fonts/issues/4212).
 
+### [Research board](https://arc.net/e/6050A8B9-2B0C-44AB-A911-6F12E4862031)
+
 ## Open issues
 
 - [Interpolation between breakpoints](https://github.com/w3c/csswg-drafts/issues/6245) (fluid type)
