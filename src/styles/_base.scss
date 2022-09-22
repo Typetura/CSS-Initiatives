@@ -3,20 +3,23 @@
     --c-primary: hsl(var(--c-hue) 100% 25%);
     --c-action: hsl(var(--c-hue) 100% 60%);
     --c-subdued: hsl(var(--c-hue) 10% 90%);
-    color: #000;
 
     --text: Literata, serif;
     --headline: 'Big Shoulders Display', sans-serif;
     --mono: 'IBM Plex Mono', monospace;
 
     --transition: 0.2s ease-in-out;
+    
+    --tt-key: root;
+    --tt-ease: ease-out;
+    --tt-max: 400;
+
+    color: #000;
 
     font-family: var(--text);
     line-height: 1.425;
     font-size: calc(20 / 16 * 100%);
-    --tt-key: root;
-    --tt-ease: ease-out;
-    --tt-max: 400;
+    scroll-behavior: smooth;
 }
 @keyframes root {
     0% {
@@ -39,11 +42,25 @@ body {
     text-underline-offset: 0.11em;
 }
 
+i, em {
+    font-style: italic;
+}
+
+b, strong {
+    font-weight: bolder;
+}
+
 :focus {
     outline: 0.2rem solid var(--c-action);
     outline-offset: 0.2rem;
     border-radius: 0.2rem;
 }
+
+:target {
+    text-decoration: underline;
+    text-decoration-color: var(--c-action);
+}
+
 
 a {
     color: inherit;
@@ -57,8 +74,14 @@ a {
         transform: scalex(-100%) translatey(-0.4em);
         color: var(--c-primary);
         margin-inline-start: 0.1em;
+        @media print {
+            content: attr(href);
+            font-size: 0.7em;
+            transform: translatey(-0.4em);
+        }
     }
-    &:visited {
+    &:visited,
+    &[href*="glossary/#"]  {
         text-decoration-color: var(--c-subdued);
         &[href*="http"]::after {
             color: var(--c-primary);
@@ -70,6 +93,34 @@ a {
         &[href*="http"]::after {
             color: var(--c-action);
         }
+    }
+}
+
+abbr {
+    text-decoration-style: wavy;
+    text-decoration-color: var(--c-subdued);
+    position: relative;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+    font-weight: 520;
+    cursor: help;
+    &:hover {
+        text-decoration-color: var(--c-action);
+    }
+    &:hover::after {
+        letter-spacing: 0;
+        font-weight: 400;
+        content: attr(title);
+        position: absolute;
+        background: var(--c-primary);
+        color: #fff;
+        width: max-content;
+        font-size: 0.75rem;
+        inset-block-start: -1.5rem;
+        inset-inline-start: 50%; 
+        padding: 0.3rem;
+        border-radius: 0.2rem;
+        transform: translateX(-50%);
     }
 }
 

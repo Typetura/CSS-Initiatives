@@ -1,0 +1,62 @@
+---
+import '../styles/styles.scss';
+
+import Head from "../components/Head.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+import XElement from 'astro-xelement'
+
+// Use Astro.glob() to fetch all posts, and then sort them by date.
+const posts = (await Astro.glob('/src/pages/open-ui/*.{md,mdx}')).sort(
+	(a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf()
+);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <Head />
+<body>
+    <Header />
+
+    <XElement @is="main"
+        @resize={element => {
+            element.target.style.setProperty('--bind', element.target.clientWidth)
+        }}          
+    >
+        <slot />
+    </XElement>
+
+    <hr />
+
+    <h2>Notes</h2>
+
+    <h3><a href="/open-ui">Open UI meeting notes</a></h3>
+
+    <ul>
+        {posts.map((post) => (
+            <li>
+                <time datetime={post.frontmatter.pubDate}>
+                    {new Date(post.frontmatter.pubDate).toLocaleDateString('en-us', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                    })}
+                </time>
+                <a href={post.url}>{post.frontmatter.title}</a>
+            </li>
+        ))}
+    </ul>
+
+    <Footer />
+
+    <script>
+        const root = document.documentElement;
+        function rootSize() {
+            root.style.setProperty('--bind', window.innerWidth);
+        }
+
+        window.onresize = rootSize;
+    </script>
+</body>
+</html>

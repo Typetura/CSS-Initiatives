@@ -9,10 +9,10 @@ header {
     line-height: 1.2;
     font-family: var(--mono);
     font-weight: 500;
-    color: #fff;
     margin: 0;
 }
 
-.header-link {
+a.header-link {
     text-decoration: none;
+    color: #fff;
 }
