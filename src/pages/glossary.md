@@ -10,6 +10,10 @@ This glossary references [The Typographic Desk Reference](https://typedeskref.co
 
 ---
 
+### Baseline
+
+The lower boundary on which text that is written horizontally sits. Some [glyphs](#glyph) may be drawn below this line, and these instances are called “descenders”. All Latin uppercase characters are drawn on and above this line.
+
 ### Block
 
 The dimension that runs perpendicular to the flow of text. For Latinic languages, block is the vertical dimension.
@@ -24,7 +28,7 @@ An artifact that enables replication and use of artwork or [glyphs](#glyph) from
 
 ### Font size
 
-The height of the design space allotted to a [glyph](#glyph). This is most easily visible with metal or wood [fonts](#font) where the letters exist on a physical block of a specific height. The anatomy of a digital font is similar, but this design space can be scaled up or down to suit the design needs.
+The total height of the design space allotted to a [glyph](#glyph). This is most easily visible with metal or wood [fonts](#font) where the letters exist on a physical block of a specific height. The anatomy of a digital font is similar, but this design space can be scaled up or down to suit the design needs.
 
 ### Glyph
 
@@ -54,6 +58,14 @@ The [inline](#inline) dimension of text.
 
 Also referred to as _“measure”_.
 
+### Metrics
+
+The various guides within a digital [font](#font) file indicating the [inline](#inline) size of [glyphs](#glyphs) as well as the vertical dimensions like [baseline](#baseline), cap-height, and [x-height](#x-height).
+
+### Optical size
+
+The design of a [typeface](#typeface) may change as it is displayed large or small. For example, the [x-height](#x-height) may increase in smaller text and [contrast](#contrast) may reduce. This happens fluidly and automatically within [variable fonts](#variable-font) with this feature. With metal [fonts](#font), these different design characteristics are cast in the the metal of different sizes of the [typeface](#typeface).
+
 ### Slant
 
 How slanted the letterforms are. This usually relates to the degrees away from 90°. This is different from [italics](#italic), which are drawn differently.
@@ -62,7 +74,7 @@ A font that has a slant without italic letterforms is called an _“oblique”_.
 
 ### Text
 
-The raw material that is written content. This does not refer to the [typesetting](#typesetting), 
+The raw material that is written content. This does not refer to the [typesetting](#typesetting), [typeface](#typeface) used, nor any other aspect of its styling.
 
 ### Type design
 
@@ -97,3 +109,7 @@ The average width and height of strokes of a [glyph](#glyph). This value is subj
 ### Width
 
 This is referred to as `font-stretch` in CSS. It’s an arbitrary scale that defines how wide or narrow the [glyphs](#glyph) are in a font. A narrow width is often called “compressed”, “condensed”, or “narrow” while a wide width is often called “expanded”, “extended”, or “wide”.
+
+### X-height
+
+The general height of the lowercase characters. This is represented as a guideline in the [metrics](#metrics) of the digital [font](#font) file itself.
