@@ -80,12 +80,16 @@ a {
             transform: translatey(-0.4em);
         }
     }
-    &:visited,
-    &[href*="glossary/#"]  {
+    &:visited  {
         text-decoration-color: var(--c-subdued);
         &[href*="http"]::after {
             color: var(--c-primary);
         }
+    }
+    &[href*="glossary/#"],
+    &[href^="#"]  {
+        text-decoration-style: wavy;
+        text-decoration-color: var(--c-subdued);
     }
     &:hover {
         color: var(--c-action);
