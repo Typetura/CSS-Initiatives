@@ -3,6 +3,9 @@
     --c-primary: hsl(var(--c-hue) 100% 25%);
     --c-action: hsl(var(--c-hue) 100% 60%);
     --c-subdued: hsl(var(--c-hue) 10% 80%);
+    --c-altbkg: hsl(var(--c-hue) 0% 97%);
+    --c-text: #000;
+    --c-background: #fff;
 
     --text: Literata, serif;
     --headline: 'Big Shoulders Display', sans-serif;
@@ -14,12 +17,22 @@
     --tt-ease: ease-out;
     --tt-max: 400;
 
-    color: #000;
+    background: var(--c-background);
+    color: var(--c-text);
 
     font-family: var(--text);
     line-height: 1.425;
     font-size: calc(20 / 16 * 100%);
     scroll-behavior: smooth;
+    @media (prefers-color-scheme: dark) {
+        --c-hue: 20deg;
+        --c-primary: hsl(var(--c-hue) 50% 60%);
+        --c-action: hsl(var(--c-hue) 80% 50%);
+        --c-subdued: hsl(var(--c-hue) 20% 30%);
+        --c-altbkg: hsl(var(--c-hue) 0% 12%);
+        --c-text: #fff;
+        --c-background: #000;
+    }
 }
 @keyframes root {
     0% {
@@ -118,7 +131,7 @@ abbr {
         content: attr(title);
         position: absolute;
         background: var(--c-primary);
-        color: #fff;
+        color: var(--c-background);
         width: max-content;
         font-size: 0.75rem;
         inset-block-start: -1.5rem;
@@ -203,12 +216,12 @@ ul.contains-task-list {
 }
 
 code {
-    background-color: hsl(var(--c-hue) 0% 97%);
+    background-color: var(--c-altbkg);
     color: var(--c-primary);
     border-radius: 0.2em;
     font-family: var(--mono);
     font-weight: 500;
-    outline: 0.2em solid hsl(var(--c-hue) 0% 97%);
+    outline: 0.2em solid var(--c-altbkg);
     margin-inline: 0.3em;
     font-size: 0.9em;
     pre & {
