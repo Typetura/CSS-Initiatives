@@ -98,7 +98,7 @@ A website containing percent based grids, percent based media, and styles for va
 
 ### Variable font
 
-A [font](#font) that contains information enabling it to interpolate it’s form along one or multiple axis. The axis may include [**weight**](#weight), [_slant_](#oblique), [optical size](#optical-size), [width](#font-stretch), or any number of arbitrary axis. Variable fonts may be authored with [multiple masters](https://glyphsapp.com/learn/multiple-masters-part-1-setting-up-masters), [parameters](https://material.io/blog/roboto-flex), or [higher level interpolation](https://www.underware.nl/case-studies/hoi/).
+A [font](#font) that contains information enabling it to interpolate it’s form along one or multiple axis. The axis may include [**weight**](#weight), [_slant_](#oblique), [optical size](#optical-size), [width](#width), or any number of arbitrary axis. Variable fonts may be authored with [multiple masters](https://glyphsapp.com/learn/multiple-masters-part-1-setting-up-masters), [parameters](https://material.io/blog/roboto-flex), or [higher level interpolation](https://www.underware.nl/case-studies/hoi/).
 
 The official name is “OpenType Font Variations”
 
