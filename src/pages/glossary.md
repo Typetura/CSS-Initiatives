@@ -60,7 +60,7 @@ Also referred to as _“measure”_.
 
 ### Metrics
 
-The various guides within a digital [font](#font) file indicating the [inline](#inline) size of [glyphs](#glyphs) as well as the vertical dimensions like [baseline](#baseline), cap-height, and [x-height](#x-height).
+The various guides within a digital [font](#font) file indicating the [inline](#inline) size of [glyphs](#glyph) as well as the vertical dimensions like [baseline](#baseline), cap-height, and [x-height](#x-height).
 
 ### Optical size
 
