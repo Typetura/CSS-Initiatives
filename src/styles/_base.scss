@@ -2,7 +2,7 @@
     --c-hue: -20deg;
     --c-primary: hsl(var(--c-hue) 100% 25%);
     --c-action: hsl(var(--c-hue) 100% 60%);
-    --c-subdued: hsl(var(--c-hue) 10% 90%);
+    --c-subdued: hsl(var(--c-hue) 10% 80%);
 
     --text: Literata, serif;
     --headline: 'Big Shoulders Display', sans-serif;
@@ -170,6 +170,38 @@ h3 {
     margin-block: 1em 0.25rem;
 }
 
+ol, ul {
+    margin-block: 1rem;
+    margin-inline: 0;
+    padding: 0;
+    padding-inline-start: 1.8rem;
+}
+
+::marker {
+    color: var(--c-primary);
+}
+
+ul {
+    list-style-type: disc;
+    ul {
+        list-style-type: circle;
+        ul {
+            list-style-type: square;
+        }
+    }
+}
+
+ol::marker {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+ul.contains-task-list {
+    list-style: none;
+    padding: 0;
+}
+
 code {
     background-color: hsl(var(--c-hue) 0% 97%);
     color: var(--c-primary);
@@ -227,6 +259,12 @@ ins {
     &:hover {
         color: hsl(var(--c-hue) 90% 5%);
     }
+}
+
+time {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.8rem;
 }
 
 hr {

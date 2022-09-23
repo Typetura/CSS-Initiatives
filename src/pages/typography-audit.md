@@ -11,7 +11,7 @@ layout: /src/layouts/Default.astro
 This is a prioritized list of CSS modules that have been specced but are not implemented consistently across browsers.
 
 1. [CSS Unit division](https://drafts.csswg.org/css-values-4/#changes-recent)
-   - This isn’t explicitly a typographic feature, but this is a big step towards enabling fluid variable font settings and font animations on resize. An incremental step towards my [initial proposal](/proposal.md).
+   - This isn’t explicitly a typographic feature, but this is a big step towards enabling fluid variable font settings and font animations on resize. This is an important part of [the roadmap](/ruleset-interpolation/roadmap).
    - Lea Verou discusses the need for this in her [recent talk](https://youtu.be/ZuZizqDF4q8?t=2235).
 1. [Text-wrap: balance](https://www.w3.org/TR/css-text-4/#valdef-text-wrap-balance)
    - The NYTimes has a [popular text balancer](https://github.com/nytimes/text-balancer). At Vox Media we inserted non-breaking spaces at the end of headlines to avoid egregiously unbalanced text. Having this built into browsers would make headlines look much better across the web.
