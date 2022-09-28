@@ -16,13 +16,9 @@ The biggest tension in [responsive web design](glossary/#responsive-web-design) 
 
 Providing a toolset to interpolate styles as containers shrink will allow web authors to ensure text is well styled regardless of layout or device. Balancing [line length](glossary/#measure), [font size](glossary/#font-size), and [line height](glossary/#line-height) along with [variable font](glossary/#variable-font) settings like [optical size](glossary/#optical-size), [width](glossary/#width), and [weight](glossary/#weight).
 
-### [Proposal](/ruleset-interpolation/proposal)
+## [Simple typesetter](simple-typesetter)
 
-### [Roadmap](/ruleset-interpolation/roadmap)
-
-### [Notes and references](/ruleset-interpolation/notes)
-
-### [Examples](/ruleset-interpolation/examples)
+An exploration of all the decisions that go into typesetting for fluid media and how might we make simple controls around them? This project is currently in the early exploration phases.
 
 ---
 
