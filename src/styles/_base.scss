@@ -121,6 +121,8 @@ abbr {
     font-size: 0.8em;
     letter-spacing: 0.05em;
     font-weight: 520;
+    text-decoration-thickness: 0.075rem;
+    text-underline-offset: 0.11rem;
     cursor: help;
     &:hover {
         text-decoration-color: var(--c-action);
