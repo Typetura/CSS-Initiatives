@@ -10,8 +10,18 @@ layout: /src/layouts/Default.astro
 
 ### Todo
 
-- [ ] Create a more specific proposal for a CSSWG spec.
-- [ ] Expand on existing solutions like `clamp()` and their shortcomings.
+Next step create a detailed proposal and clear expaliner documents with pros and cons for various approaches.
+
+- Create a more specific proposal for a <abbr title="Cascading Style Sheets Working Group">CSSWG</abbr> and <abbr title="Technical Architecture Group">TAG</abbr>.
+  - Outline problems and opportunities
+  - Rough CSS proposal
+  - Other possible options and solutions
+    - Expand on existing solutions like `clamp()` and their shortcomings
+  - Assess developer interest
+  - A through rundown of the alternatives
+- Explainers help get through TAG
+  - Indicate where input would be useful
+  - Link to the full explainer in a Github issue with proposal
 
 ---
 
