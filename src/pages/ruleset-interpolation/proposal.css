@@ -1,0 +1,43 @@
+#container {
+  height: 300px;
+}
+
+article {
+  container-type: inline-size;
+  container-name: sidebar;
+}
+
+.headline {
+  animation-name: primaryHeadline;
+  animation-timing-function: ease-out;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-timeline: primaryHeadline;
+}
+
+@query-timeline article {
+  source: selector("article");
+  scroll-offsets: 0px, 300px;
+  orientation: "inline";
+}
+
+@keyframes rotateAnimation {
+  from {
+    font-size: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@scroll-timeline headline {
+  source: selector(".headline");
+  orientation: "inline";
+  offsets: 0rem, 60rem;
+}
+
+/* Hook our animation with the timeline to our columns */
+.column-reverse {
+  animation: 1s adjust-position linear forwards;
+  animation-timeline: scroll-in-document;
+}

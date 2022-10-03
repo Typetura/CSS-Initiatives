@@ -6,9 +6,7 @@ layout: /src/layouts/Default.astro
 
 # Ruleset interpolation
 
-The biggest tension in [responsive web design](glossary/#responsive-web-design) is the interaction between [flexible media and inflexible text](https://frankchimero.com/blog/2015/the-webs-grain/). In responsive layouts, text behaves like an incompressible liquid that expands in the [block](glossary/#block) direction as it is compressed in the [inline](glossary/#inline) direction. Conversely, flexible media shrinks in the block direction proportionally to shrinking in the inline direction.
-
-Providing a toolset to interpolate styles as containers shrink will allow web authors to ensure text is well styled regardless of layout or device. Balancing [line length](glossary/#measure), [font size](glossary/#font-size), and [line height](glossary/#line-height) along with [variable font](glossary/#variable-font) settings like [optical size](glossary/#optical-size), [width](glossary/#width), and [weight](glossary/#weight).
+The web is fluidly responsive and authors require more fluid control over their styles. Currently entire CSS rulesets can be changed at specific breakpoints with container and media queries. However there is no way to interpolate these rulesets. This is particularly problematic when it comes to responsive styling of text. Websites like [The Outline](https://theoutline.com/), [Stripe](https://stripe.com/), [HEX](https://hex.xyz/Margo/) and [Elliot Jay Stocks](https://elliotjaystocks.com/) add numerous breakpoints to control how text is styled with growing and shrinking pages. Interpolation of rulesets across container or viewport sizes would enable better design fidelity across a greater range of viewports with cleaner and more manageable code.
 
 ### [Proposal](/ruleset-interpolation/proposal)
 
