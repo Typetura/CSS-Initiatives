@@ -6,29 +6,83 @@ layout: /src/layouts/Default.astro
 
 # Ruleset interpolation proposal
 
-The web is fluidly responsive and authors require more fluid control over their styles. Currently entire CSS rulesets can be changed at specific breakpoints with container and media queries. However there is no way to interpolate these rulesets. This is particularly problematic when it comes to responsive styling of text. Websites like [The Outline](https://theoutline.com/), [Stripe](https://stripe.com/), [HEX](https://hex.xyz/Margo/) and [Elliot Jay Stocks](https://elliotjaystocks.com/) add numerous breakpoints to control how text is styled with growing and shrinking pages. Interpolation of rulesets across container or viewport sizes would enable better design fidelity across a greater range of viewports with cleaner and more manageable code.
+There should be a way to bind keyframe animations to the size of containers, similar to how `scroll-timeline` binds animations to scroll depth. This would give authors more fluid control over how their websites and components scale with fewer breakpoints.
 
----
+There are two possible paths this specification might take. We already have container queries and attaching an animation to that container might be a good way to keep styles consistent. The container could also be defined using a similar syntax to `@scroll-timeline`.
 
-### Todo
+## Animation attachment to a container
 
-Next step create a detailed proposal and clear expaliner documents with pros and cons for various approaches.
+```css
+article {
+  container-type: inline-size;
+  container-name: article;
+}
 
-- Create a more specific proposal for a <abbr title="Cascading Style Sheets Working Group">CSSWG</abbr> and <abbr title="Technical Architecture Group">TAG</abbr>.
-  - Outline problems and opportunities
-  - Rough CSS proposal
-  - Other possible options and solutions
-    - Expand on existing solutions like `clamp()` and their shortcomings
-  - Assess developer interest
-  - A through rundown of the alternatives
-- Explainers help get through TAG
-  - Indicate where input would be useful
-  - Link to the full explainer in a Github issue with proposal
+.headline {
+  /* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
+  /* attahment function ( container name and dimention, start size, end size ) */
+  animation-attachment: container(article inline-size, 20rem, 80rem);
 
----
+  /* Define the animation parameters */
+  animation-name: headline;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1s;
 
-**Placeholder for now. Things will likely change here relatively quickly.**
+  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
+  animation-fill-mode: both;
+}
 
-Developing and documenting polyfills for CSS that will have an impact on the typographic quality (and more!) of the web. Ultimately the end result would be to get Miriam Susanne’s Interpolated Values specification into CSS. The same end result can be done with the current specification and a few CSS tricks but now browsers support it. This will enable fluid control over styles across viewport and container widths, not rigid breakpoints but full interpolation between all values.
+/* Standard animation keyframes */
+@keyframes headline {
+  from {
+    font-size: 1.6rem;
+    color: hsl(9, 69%, 11%)
+  }
+  to {
+    transform: 5rem;
+    line-height: 1;
+    color: hsl(9, 96%, 29%)
+  }
+}
+```
 
-Success would be this technique replacing clamp for fluid typography on the web. There are numerous issues with clamp for typography from it’s unintuitive syntax to lack of control regarding how things scale at different points. This approach addresses all these issues. Seeing trends of this approach overtaking clamp on web surveys and trending topics would be a success.
+## Animation timeline
+
+```css
+/* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
+@query-timeline article {
+  source: selector("article");
+  orientation: "inline";
+  length-offsets: 20rem 80rem;
+}
+
+.headline {
+  /* Set the animation timeline, much like scroll timeline is set */
+  animation-timeline: article;
+
+  /* Define the animation parameters */
+  animation-name: headline;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1s;
+
+  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
+  animation-fill-mode: both;
+}
+
+/* Standard animation keyframes */
+@keyframes headline {
+  from {
+    font-size: 1.6rem;
+    color: hsl(9, 69%, 11%)
+  }
+  to {
+    transform: 5rem;
+    line-height: 1;
+    color: hsl(9, 96%, 29%)
+  }
+}
+```
+
+## Todo
+
+- Decide if we should register the timeline container with the `@query-timeline` property similar to animation timelines or using `container-type` to align with the container query specification.

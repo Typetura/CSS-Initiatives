@@ -1,43 +1,69 @@
-#container {
-  height: 300px;
-}
-
+/* Container query */
 article {
   container-type: inline-size;
-  container-name: sidebar;
+  container-name: article;
 }
 
 .headline {
-  animation-name: primaryHeadline;
-  animation-timing-function: ease-out;
+  /* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
+  /* attahment function ( container name and dimention, start size, end size ) */
+  animation-attachment: container(article inline-size, 20rem, 80rem);
+
+  /* Define the animation parameters */
+  animation-name: headline;
+  animation-timing-function: ease-in-out;
   animation-duration: 1s;
+
+  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
   animation-fill-mode: both;
-  animation-timeline: primaryHeadline;
 }
 
-@query-timeline article {
-  source: selector("article");
-  scroll-offsets: 0px, 300px;
-  orientation: "inline";
-}
-
-@keyframes rotateAnimation {
+/* Standard animation keyframes */
+@keyframes headline {
   from {
-    font-size: rotate(0deg);
+    font-size: 1.6rem;
+    color: hsl(9, 69%, 11%)
   }
   to {
-    transform: rotate(360deg);
+    transform: 5rem;
+    line-height: 1;
+    color: hsl(9, 96%, 29%)
   }
 }
 
-@scroll-timeline headline {
-  source: selector(".headline");
+
+/* @query-timeline */
+
+/* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
+/* attahment function ( container name and dimention, start size, end size ) */
+@query-timeline article {
+  source: selector("article");
   orientation: "inline";
-  offsets: 0rem, 60rem;
+  length-offsets: 20rem 80rem;
 }
 
-/* Hook our animation with the timeline to our columns */
-.column-reverse {
-  animation: 1s adjust-position linear forwards;
-  animation-timeline: scroll-in-document;
+.headline {
+  /* Set the animation timeline, much like scroll timeline is set */
+  animation-timeline: article;
+
+  /* Define the animation parameters */
+  animation-name: headline;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1s;
+
+  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
+  animation-fill-mode: both;
+}
+
+/* Standard animation keyframes */
+@keyframes headline {
+  from {
+    font-size: 1.6rem;
+    color: hsl(9, 69%, 11%)
+  }
+  to {
+    transform: 5rem;
+    line-height: 1;
+    color: hsl(9, 96%, 29%)
+  }
 }

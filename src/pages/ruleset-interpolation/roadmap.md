@@ -59,7 +59,7 @@ This can be shortened into two things: identifying containers and parsing the wi
 
 ## Ruleset interpolation
 
-The above is a stop-gap to bring ruleset interpolation to CSS without the need for JS. However this is a relatively complex use of animation and authorship would be enhanced with a proper ruleset interpolation spec.
+The above is a stop-gap to bring ruleset interpolation to CSS without the need for JS. However this is a relatively complex use of animation and authorship would be enhanced with a [proper ruleset interpolation spec](proposal).
 
 ## Polyfills
 
