@@ -10,6 +10,55 @@ There should be a way to bind keyframe animations to the size of containers, sim
 
 There are two possible paths this specification might take. We already have container queries and attaching an animation to that container might be a good way to keep styles consistent. The container could also be defined using a similar syntax to `@scroll-timeline`.
 
+## Desired outcome
+
+<div class="typetura demo" id="demo">
+    <h1 class="headline">Resize me</h1>
+</div>
+<style>
+.demo {
+    position: relative;
+    display: inline-block;
+    width: 400px;
+    max-width: 100%;
+    height: 10rem;
+    border-radius: 0.25rem;
+    background-color: #eee;
+    resize: horizontal;
+    overflow: hidden;
+}
+.headline {
+    --min: 200;
+    --max: 800;
+    margin-block: 2rem;
+    animation: 1s ease-in-out calc(-1s * (var(--width, 0) - var(--min)) / (var(--max) - var(--min))) 1 both paused headline;
+}
+@keyframes headline {
+  from {
+    font-size: 1.2rem;
+    color: hsl(330, 96%, 15%);
+  }
+  to {
+    transform: 4rem;
+    line-height: 1;
+    color: hsl(330, 96%, 45%);
+  }
+}
+</style>
+<script>
+    let demo = document.getElementById('demo');
+    const resizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+        if (entry.contentBoxSize) {
+        // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+        const contentBoxSize = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0] : entry.contentBoxSize;
+        entry.target.style.setProperty('--width', contentBoxSize.inlineSize);
+        }
+    }
+    });
+    resizeObserver.observe(demo);
+</script>
+
 ## Animation attachment to a container
 
 ```css
@@ -21,7 +70,7 @@ article {
 .headline {
   /* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
   /* attahment function ( container name and dimention, start size, end size ) */
-  animation-attachment: container(article inline-size, 20rem, 80rem);
+  animation-attachment: container(article inline-size, 10rem, 40rem);
 
   /* Define the animation parameters */
   animation-name: headline;
@@ -35,13 +84,13 @@ article {
 /* Standard animation keyframes */
 @keyframes headline {
   from {
-    font-size: 1.6rem;
-    color: hsl(9, 69%, 11%)
+    font-size: 1.2rem;
+    color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 5rem;
+    transform: 4rem;
     line-height: 1;
-    color: hsl(9, 96%, 29%)
+    color: hsl(330, 96%, 45%);
   }
 }
 ```
@@ -53,7 +102,7 @@ article {
 @query-timeline article {
   source: selector("article");
   orientation: "inline";
-  length-offsets: 20rem 80rem;
+  length-offsets: 10rem 40rem;
 }
 
 .headline {
@@ -72,13 +121,13 @@ article {
 /* Standard animation keyframes */
 @keyframes headline {
   from {
-    font-size: 1.6rem;
-    color: hsl(9, 69%, 11%)
+    font-size: 1.2rem;
+    color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 5rem;
+    transform: 4rem;
     line-height: 1;
-    color: hsl(9, 96%, 29%)
+    color: hsl(330, 96%, 45%);
   }
 }
 ```
