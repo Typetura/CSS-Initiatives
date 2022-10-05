@@ -19,7 +19,7 @@ There are two possible paths this specification might take. We already have cont
 .demo {
     position: relative;
     display: inline-block;
-    width: 400px;
+    width: 25rem;
     max-width: 100%;
     height: 10rem;
     border-radius: 0.25rem;
