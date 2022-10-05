@@ -12,7 +12,7 @@ The web is fluidly responsive and authors require more fluid control over their 
 
 ### [Proposal](/ruleset-interpolation/proposal)
 
-### [Roadmap](/ruleset-interpolation/oadmap)
+### [Roadmap](/ruleset-interpolation/roadmap)
 
 ### [Notes and references](/ruleset-interpolation/notes)
 
