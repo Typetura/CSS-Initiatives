@@ -31,16 +31,18 @@ There are two possible paths this specification might take. We already have cont
     --min: 200;
     --max: 800;
     margin-block: 2rem;
+    line-height: 1;
     animation: 1s ease-in-out calc(-1s * (var(--width, 0) - var(--min)) / (var(--max) - var(--min))) 1 both paused headline;
 }
 @keyframes headline {
   from {
     font-size: 1.2rem;
+    font-weight: 900;
     color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 4rem;
-    line-height: 1;
+    transform: 3rem;
+    font-weight: 600;
     color: hsl(330, 96%, 45%);
   }
 }
@@ -85,11 +87,12 @@ article {
 @keyframes headline {
   from {
     font-size: 1.2rem;
+    font-weight: 900;
     color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 4rem;
-    line-height: 1;
+    transform: 3rem;
+    font-weight: 600;
     color: hsl(330, 96%, 45%);
   }
 }
@@ -122,11 +125,12 @@ article {
 @keyframes headline {
   from {
     font-size: 1.2rem;
+    font-weight: 900;
     color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 4rem;
-    line-height: 1;
+    transform: 3rem;
+    font-weight: 600;
     color: hsl(330, 96%, 45%);
   }
 }
