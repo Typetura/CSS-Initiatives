@@ -18,7 +18,56 @@ The web is fluidly responsive and authors require more fluid control over their 
 
 ### [Examples](/ruleset-interpolation/examples)
 
+## Desired outcome
 
+<div class="typetura demo" id="demo">
+    <h1 class="headline">Resize me</h1>
+</div>
+<style>
+.demo {
+    position: relative;
+    display: inline-block;
+    width: 25rem;
+    max-width: 100%;
+    height: 10rem;
+    border-radius: 0.25rem;
+    background-color: #eee;
+    resize: horizontal;
+    overflow: hidden;
+}
+.headline {
+    --min: 200;
+    --max: 800;
+    margin-block: 2rem;
+    line-height: 1;
+    animation: 1s ease-in-out calc(-1s * (var(--width, 0) - var(--min)) / (var(--max) - var(--min))) 1 both paused headline;
+}
+@keyframes headline {
+  from {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: hsl(330, 96%, 15%);
+  }
+  to {
+    transform: 3rem;
+    font-weight: 600;
+    color: hsl(330, 96%, 45%);
+  }
+}
+</style>
+<script>
+    let demo = document.getElementById('demo');
+    const resizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+        if (entry.contentBoxSize) {
+        // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+        const contentBoxSize = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0] : entry.contentBoxSize;
+        entry.target.style.setProperty('--width', contentBoxSize.inlineSize);
+        }
+    }
+    });
+    resizeObserver.observe(demo);
+</script>
 
 ## Next steps
 
