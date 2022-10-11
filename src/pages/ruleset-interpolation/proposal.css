@@ -1,3 +1,25 @@
+/* Container keyframes */
+/* Source: https://gist.github.com/scottkellum/0c29c4722394c72d311c5045a30398e5 */
+article {
+  container-type: inline-size;
+  container-name: article;
+}
+
+.headline {
+  /* Define the container animation parameters */
+  container-animation-name: headline;
+  container-animation-timing-function: ease-in-out;
+}
+
+@container-keyframes typography (inline-size) {
+  20em {
+    font-size: 120%;
+  }
+  80em {
+    font-size: 160%;
+  }
+}
+
 /* Container query */
 article {
   container-type: inline-size;
@@ -22,15 +44,14 @@ article {
 @keyframes headline {
   from {
     font-size: 1.6rem;
-    color: hsl(9, 69%, 11%)
+    color: hsl(9, 69%, 11%);
   }
   to {
     transform: 5rem;
     line-height: 1;
-    color: hsl(9, 96%, 29%)
+    color: hsl(9, 96%, 29%);
   }
 }
-
 
 /* @query-timeline */
 
@@ -59,11 +80,11 @@ article {
 @keyframes headline {
   from {
     font-size: 1.6rem;
-    color: hsl(9, 69%, 11%)
+    color: hsl(9, 69%, 11%);
   }
   to {
     transform: 5rem;
     line-height: 1;
-    color: hsl(9, 96%, 29%)
+    color: hsl(9, 96%, 29%);
   }
 }

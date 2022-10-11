@@ -6,7 +6,7 @@ layout: /src/layouts/Default.astro
 
 Shared definitions are important to adequate communication. Typographic terms are often confusing or hold different definitions in different organizations. This is aimed to help clarify what words mean in the context of this documentation.
 
-This glossary references [The Typographic Desk Reference](https://typedeskref.com/) by Theo Rosendorf and [Practical Typography](https://practicaltypography.com/) by Matthew Butterick.
+You can also find excellent references with [The Typographic Desk Reference](https://typedeskref.com/) by Theo Rosendorf and [Practical Typography](https://practicaltypography.com/) by Matthew Butterick.
 
 ---
 
