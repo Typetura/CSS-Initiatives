@@ -45,7 +45,7 @@ This is a prioritized list of CSS modules that have been specced but are not imp
 
      [![A comparison of font-size between two different pieces of text.](/images/font-size-ex-height-example.png)](https://codepen.io/scottkellum/pen/zYjgRpZ)
 
-   - Also [see this thread between Chris Armstrong and Una on Twitter](https://twitter.com/Armstrong/status/1583458332681338880)
+   - Also [see this thread between Chris Armstrong and Una on Twitter](https://twitter.com/Armstrong/status/1583458332681338880), Chris created this [fantastic video describing the need for x-height based font sizing in detail](https://twitter.com/Armstrong/status/1583555898047201280).
 
 ## [Research board](https://arc.net/e/6050A8B9-2B0C-44AB-A911-6F12E4862031)
 
