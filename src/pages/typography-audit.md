@@ -39,9 +39,9 @@ This is a prioritized list of CSS modules that have been specced but are not imp
 
 1. [Ruleset interpolation](/ruleset-interpolation)
 
-2. Set font-size by [x-height](/glossary#x-height)
+2. Set font-size by [x-height](/glossary/#x-height)
 
-   - [X-height](/glossary#x-height) has more of an impact on the appearance of perceived font-size than the [font size](/glossary#font-size) itself, which is the size of the art-space the font itself is drawn on.  _Note some considerations will need to be made regarding internationalization here as only alphabets with lowercase character sets have an x-height._
+   - [X-height](/glossary/#x-height) has more of an impact on the appearance of perceived font-size than the [font size](/glossary/#font-size) itself, which is the size of the art-space the font itself is drawn on.  _Note some considerations will need to be made regarding internationalization here as only alphabets with lowercase character sets have an x-height._
 
      ![A comparison of font-size between two different pieces of text.](/images/font-size-ex-height-example.png)
 
