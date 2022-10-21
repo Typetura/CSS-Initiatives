@@ -4,7 +4,7 @@ layout: /src/layouts/Default.astro
 
 <!-- @format -->
 
-# Typographic CSS Audit
+# Typographic CSS audit & wish list
 
 ## Has spec but not consistently implemented
 
@@ -34,6 +34,18 @@ This is a prioritized list of CSS modules that have been specced but are not imp
 - `-webkit-background-clip`: implemented in all major browsers but doesn’t have a spec. [Webkit’s blog post on background-clip: text](https://webkit.org/blog/164/background-clip-text/).
 - `-webkit-text-stroke`: implemented in all major browsers but doesn’t have an official spec. [The -webkit-text-stroke compatibility standard can be found here](https://compat.spec.whatwg.org/#the-webkit-text-stroke).
   - When codifying into an official spec, please [note the issues with outline overlaps that are common in variable fonts](https://github.com/google/fonts/issues/4212).
+
+## Wish list
+
+1. [Ruleset interpolation](/ruleset-interpolation)
+
+2. Set font-size by [x-height](/glossary#x-height)
+
+   - [X-height](/glossary#x-height) has more of an impact on the appearance of perceived font-size than the [font size](/glossary#font-size) itself, which is the size of the art-space the font itself is drawn on.  _Note some considerations will need to be made regarding internationalization here as only alphabets with lowercase character sets have an x-height._
+
+     ![A comparison of font-size between two different pieces of text.](/images/font-size-ex-height-example.png)
+
+   - Also [see this thread between Chris Armstrong and Una on Twitter](https://twitter.com/Armstrong/status/1583458332681338880)
 
 ## [Research board](https://arc.net/e/6050A8B9-2B0C-44AB-A911-6F12E4862031)
 
