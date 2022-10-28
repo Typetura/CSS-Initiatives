@@ -1,17 +1,22 @@
 .nav {
-    position: sticky;
-    top: 0;
+    font-family: var(--mono);
     display: flex;
-    gap: 1em;
-    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.75rem;
     padding-block: 0.67em;
     background: var(--c-background);
     border-bottom: 1px solid var(--c-primary);
     z-index: 9;
     a {
+        white-space: nowrap;
         text-decoration: none;
         &::after {
             display: none !important;
         }
+    }
+    @media (min-height: 40em) {
+        position: sticky;
+        top: 0;
     }
 }
