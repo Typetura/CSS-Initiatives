@@ -1,0 +1,33 @@
+<nav class="nav">
+    <a id="edit-page" href="https://github.com/Typetura/CSS-Initiatives">Edit this page</a>
+    <a id="page-history" href="https://github.com/Typetura/CSS-Initiatives">View page history</a>
+    <a id="file-issue" href="https://github.com/Typetura/CSS-Initiatives/issues/new">File an issue on this page</a>
+    <a id="open-issues" href="https://github.com/Typetura/CSS-Initiatives/issues/">Open issues for this page</a>
+
+    <script>
+        const path = window.location.pathname;
+        const editPage = document.getElementById('edit-page');
+        const pageHistory = document.getElementById('page-history');
+        const fileIssue = document.getElementById('file-issue');
+        const openIssues = document.getElementById('open-issues');
+    
+        let githubLink;
+        let issueLabel = `${path.slice(1).replaceAll('/','+').replaceAll('-','+')}`;
+    
+        if(path === '/') {
+            githubLink = `/main/src/pages/index.md`;
+            issueLabel = `home+page`;
+        } else if(path === '/simple-typesetter' || path === '/ruleset-interpolation') {
+            githubLink = `/main/src/pages${path}/index.md`;
+        } else if(path === '/open-ui') {
+            githubLink = `/main/src/pages${path}/index.astro`;
+        } else {
+            githubLink = `/main/src/pages${path}.md`;
+        }
+    
+        editPage.setAttribute('href', `https://github.com/Typetura/CSS-Initiatives/blob${githubLink}`);
+        pageHistory.setAttribute('href', `https://github.com/Typetura/CSS-Initiatives/commits${githubLink}`);
+        fileIssue.setAttribute('href', `https://github.com/Typetura/CSS-Initiatives/issues/new?labels=${issueLabel}`);
+        openIssues.setAttribute('href', `https://github.com/Typetura/CSS-Initiatives/labels/${issueLabel.replaceAll('+','%20')}`);
+    </script>
+</nav>

@@ -1,0 +1,17 @@
+.nav {
+    position: sticky;
+    top: 0;
+    display: flex;
+    gap: 1em;
+    font-size: 0.8rem;
+    padding-block: 0.67em;
+    background: var(--c-background);
+    border-bottom: 1px solid var(--c-primary);
+    z-index: 9;
+    a {
+        text-decoration: none;
+        &::after {
+            display: none !important;
+        }
+    }
+}
