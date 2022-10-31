@@ -55,9 +55,18 @@ article {
 
 ## Introduction
 
-## Goals
+Building upon media queries and container queries, there are times when it is ideal to have gradations of change between viewport and component sizes as opposed to specific points. As more device types like watches and foldables enter the web ecosystem as well as more complex layouts are being used the need for this level of control increases. This control is espeicially useful for typography and spacing within layout.
 
-## Non-goals
+Currently some degree of this can be achieved with `clamp()` but this doesn’t follow the container sizing mental model used in media/element queries, is limited to a single value, is limited to length typed units, and lacks easing control. A workaround to gain back all this functionality is possible by passing container width into the delay of an animation function but there are opportunities to make this cleaner and more clear.
+
+## Functionality goals
+
+- The ability to interpolate styles across container and viewport widths.
+- This interpolation must support all CSS interpolate types including `length`, `color`, and `number`.
+- There needs to be the ability to define the easing of the interpolation.
+- The ability to define the start and end size of the interpolation.
+- Ideally more than two points can be interpolated between. For example an inline-size of 20rem, 40rem, and 80rem can have different rulesets.
+- Ideally multiple properties can be interpolated at once. It’s rare that I need only one `property: value` pair to change at a time.
 
 ## Proposed Solutions
 
