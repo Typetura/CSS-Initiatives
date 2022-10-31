@@ -53,6 +53,20 @@ article {
 
 ## Table of contents
 
+- [Introduction](#introduction)
+- [Functionality goals](#functionality-goals)
+- [Proposed solutions](#proposed-solutions)
+  - [Container-animation](#container-animation)
+  - [Animation attachment to a container](#animation-attachment-to-a-container)
+  - [Animation timeline](#animation-timeline)
+- [Key scenarios](#key-scenarios)
+  - [Reduce excessive breakpoints](#reduce-excessive-breakpoints)
+  - [Consolodate styles](#consolodate-styles)
+  - [Changing typesetting around layout shifts](#changing-typesetting-around-layout-shifts)
+  - [Smooth layout shifts on resize](#smooth-layout-shifts-on-resize)
+- [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
+- [References & acknowledgements](#references--acknowledgements)
+
 ## Introduction
 
 Building upon media queries and container queries, there are times when it is ideal to have gradations of change between viewport and component sizes as opposed to specific points. As more device types like watches and foldables enter the web ecosystem as well as more complex layouts are being used the need for this level of control increases. This control is espeicially useful for typography and spacing within layout.
@@ -68,7 +82,7 @@ Currently some degree of this can be achieved with `clamp()` but this doesn’t 
 - Ideally more than two points can be interpolated between. For example an inline-size of 20rem, 40rem, and 80rem can have different rulesets.
 - Ideally multiple properties can be interpolated at once. It’s rare that I need only one `property: value` pair to change at a time.
 
-## Proposed Solutions
+## Proposed solutions
 
 ### Container-animation
 
