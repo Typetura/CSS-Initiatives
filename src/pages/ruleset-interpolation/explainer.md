@@ -85,7 +85,7 @@ article {
   container-interpolation-timing-function: ease-in-out;
 }
 
-@container-keyframes headline (inline-size) {
+@container-keyframes headline (article: inline-size) {
   10rem {
     font-size: 1.2rem;
     font-weight: 900;
@@ -220,7 +220,22 @@ This direction is more aligned with scroll-timeline. It is designed to mirror th
 
 ## Key scenarios
 
-## Detailed design discussion & alternatives
+### Reduce excessive breakpoints
+
+Currently the following websites use numerous breakpoints to define how typesetting changes at different screen sizes:
+[The Outline](https://theoutline.com/), [HEX](https://hex.xyz/Margo/) and [Elliot Jay Stocks](https://elliotjaystocks.com/).
+
+### Consolodate styles
+
+[The Atlantic](https://www.theatlantic.com/) has a typographically rich home page on desktop with headlines of various sizes based on their container size. All of these headline styles could be consolodated into one interpolated ruleset for this layout with the additional bonus of working across viewport sizes. Here is a demo of [The Atlantic with an interpolated headline style](https://demos.typetura.com/the-atlantic).
+
+### Changing typesetting around layout shifts
+
+The [Stripe](https://stripe.com/) home page changes it’s type styles for a layout shift. If these styles were interpolated and bound to the text container itself, then as the layout shift happens the text would automatically resize appropriately. Here is an example of [what this type of layout might look like with interpolated styles](https://demos.typetura.com/magazine.html).
+
+### Smooth layout shifts on resize
+
+Lynn Fisher used Typetura to interpolate rulesets with CSS for [her latest 2021 website redesign](https://lynnandtonic.com/). This would all be possible natively in CSS with ruleset interpolation. Additionally more subtle applications of this can be applied, like the way the floating images slide in and out of the text column where there is space on [this “Explore” demo](https://demos.typetura.com/magazine.html).
 
 ## Stakeholder Feedback / Opposition
 
