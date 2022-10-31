@@ -1,0 +1,238 @@
+---
+layout: /src/layouts/Default.astro
+---
+
+<!-- @format -->
+
+# Ruleset interpolation Explainer
+
+## Authors
+
+- Scott Kellum
+- Miriam Suzanne
+
+## Participate
+
+Please leave feedback by filing issues on [this page’s github repositiory](https://github.com/Typetura/CSS-Initiatives/issues/new?labels=ruleset+interpolation+explainer).
+
+Proto implementations: [Typetura](https://github.com/typetura/typetura)
+
+A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `100cqi / 1px` portion of animation delay)_ to function propertly:
+
+```css
+article {
+  container-type: inline-size;
+}
+.headline {
+    --min: 200;
+    --max: 800;
+    --name: headline;
+    --timing-function: ease-in-out;
+    animation:
+      1s
+      var(--timing-function, linear)
+      calc(-1s * (100cqi / 1px - var(--min, 0)) / (var(--max, 0) - var(--min, 0)))
+      1
+      both
+      paused
+      var(--name, none);
+}
+@keyframes headline {
+  from {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: hsl(330, 96%, 15%);
+  }
+  to {
+    transform: 3rem;
+    font-weight: 600;
+    color: hsl(330, 96%, 45%);
+  }
+}
+```
+
+## Table of contents
+
+## Introduction
+
+## Goals
+
+## Non-goals
+
+## Proposed Solutions
+
+### Container-animation
+
+This proposal creates a specific property focused on container interpolation as opposed to relying on animation. This sheds the baggage of time-based logic enabling `container-keyframes` to contain length based units. This proposal was [originally discussed in this gist](https://gist.github.com/scottkellum/0c29c4722394c72d311c5045a30398e5).
+
+```css
+article {
+  container-type: inline-size;
+  container-name: article;
+}
+
+.headline {
+  container-interpolation-name: headline;
+  container-interpolation-timing-function: ease-in-out;
+}
+
+@container-keyframes headline (inline-size) {
+  10rem {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: hsl(330, 96%, 15%);
+  }
+  40rem {
+    transform: 3rem;
+    font-weight: 600;
+    color: hsl(330, 96%, 45%);
+  }
+}
+```
+
+#### Advantages
+
+- A simple syntax
+- Relies on container query syntax and mental model
+- Length units can be used in keyframes
+  - These units can also be mixed, so things can be interpolated from a size of 100px to a size of 30rem. As one example this may be useful in interpolating an icon’s appearance from its minimum pixel-based size to a size based on the text column it sits within.
+
+- Does not require duration in order to work
+- Can assume an `animation-fill-mode` of `both` as default
+
+#### Disadvantages
+
+- A whole new spec to maintain as opposed to expanding the existing animation spec.
+
+### Animation attachment to a container
+
+This is an extension of `animation` to allow for binding to container queries. A new function here defines the what dimension is being queried as well as the start and end points of the interpolation.
+
+```css
+article {
+  container-type: inline-size;
+  container-name: article;
+}
+
+.headline {
+  /* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
+  /* attahment function ( container name and dimention, start size, end size ) */
+  animation-attachment: container(article inline-size, 10rem, 40rem);
+
+  /* Define the animation parameters */
+  animation-name: headline;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1s;
+
+  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
+  animation-fill-mode: both;
+}
+
+/* Standard animation keyframes */
+@keyframes headline {
+  from {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: hsl(330, 96%, 15%);
+  }
+  to {
+    transform: 3rem;
+    font-weight: 600;
+    color: hsl(330, 96%, 45%);
+  }
+}
+```
+
+#### Advantages
+
+- Relies on container query syntax and mental model
+- Relies on animation and keyframe syntax and mental model
+- Aligned with animation spec for future changes and maintenance
+
+#### Disadvantages
+
+- Doesn’t allow for length based units in keyframes
+- Has time-based baggage from animations and duration needs to be defined
+- More verbose than [container-animation](#container-animation)
+- `fill-mode` default of `none` is not ideal
+
+### Animation timeline
+
+This direction is more aligned with scroll-timeline. It is designed to mirror that spec, changing the syntax to `@query-timeline` as opposed to `@scroll-timeline` to define the query interpolation behavior.
+
+```css
+/* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
+@query-timeline article {
+  source: selector("article");
+  orientation: "inline";
+  length-offsets: 10rem 40rem;
+}
+
+.headline {
+  /* Set the animation timeline, much like scroll timeline is set */
+  animation-timeline: article;
+
+  /* Define the animation parameters */
+  animation-name: headline;
+  animation-timing-function: ease-in-out;
+  animation-duration: 1s;
+
+  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
+  animation-fill-mode: both;
+}
+
+/* Standard animation keyframes */
+@keyframes headline {
+  from {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: hsl(330, 96%, 15%);
+  }
+  to {
+    transform: 3rem;
+    font-weight: 600;
+    color: hsl(330, 96%, 45%);
+  }
+}
+```
+
+#### Advantages
+
+- Relies on scroll-timeline syntax and mental model
+- Relies on animation and keyframe syntax and mental model
+- Aligned with animation spec for future changes and maintenance
+
+#### Disadvantages
+
+- Doesn’t allow for length based units in keyframes
+- Has time-based baggage from animations and duration needs to be defined
+- More verbose than [container-animation](#container-animation)
+- `fill-mode` default of `none` is not ideal
+
+## Key scenarios
+
+## Detailed design discussion & alternatives
+
+## Stakeholder Feedback / Opposition
+
+- Chromium : Waiting on feedback
+- Gecko : Waiting on feedback
+- Webkit : Waiting on feedback
+
+## References & acknowledgements
+
+- Miriam Suzanne for proposal collaboration
+- Nicole Sullivan and Google UI Fund for support fast-tracking this proposal
+- Ana Monroe for editing and design feedback
+
+#### Additional thanks to support, feedback, and inspiration from
+
+- Florian Schulz
+- Jen Simmons
+- Tim Brown
+
+## Changelog
+
+### 2022.10.31
+
+- First draft

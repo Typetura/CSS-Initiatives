@@ -67,6 +67,7 @@ There are two possible paths this specification might take. We already have cont
     });
     resizeObserver.observe(demo);
 </script>
+
 ## Container-animation
 
 This proposal creates a more specific property focused on container interpolation as opposed to relying on animation. This sheds the baggage of time-based logic enabling `container-keyframes` to contain length based units. This proposal was [originally discussed in this gist](https://gist.github.com/scottkellum/0c29c4722394c72d311c5045a30398e5).
