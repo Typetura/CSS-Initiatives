@@ -102,40 +102,6 @@ Currently some degree of this can be achieved with `clamp()`, but this doesn’t
 
 ## Proposed solutions
 
-A workaround is possible now within the latest CSS spec and is waiting for browsers to implement unit division _(the `100cqi / 1px` portion of animation delay)_ to function propertly:
-
-```css
-article {
-  container-type: inline-size;
-}
-.headline {
-    --min: 200;
-    --max: 800;
-    --name: headline;
-    --timing-function: ease-in-out;
-    animation:
-      1s
-      var(--timing-function, linear)
-      calc(-1s * (100cqi / 1px - var(--min, 0)) / (var(--max, 0) - var(--min, 0)))
-      1
-      both
-      paused
-      var(--name, none);
-}
-@keyframes headline {
-  from {
-    font-size: 1.2rem;
-    font-weight: 900;
-    color: hsl(330, 96%, 15%);
-  }
-  to {
-    transform: 3rem;
-    font-weight: 600;
-    color: hsl(330, 96%, 45%);
-  }
-}
-```
-
 ### Container-animation
 
 This proposal creates a specific property focused on container interpolation as opposed to relying on animation. This sheds the baggage of time-based logic enabling `container-keyframes` to contain length based units. This proposal was [originally discussed in this gist](https://gist.github.com/scottkellum/0c29c4722394c72d311c5045a30398e5).
@@ -178,6 +144,11 @@ article {
 #### Disadvantages
 
 - A whole new spec to maintain as opposed to expanding the existing animation spec.
+
+#### Open questions
+
+-  What styles are applied when the `animation` property is used on this element?
+  - Ideally the animation would override styles styles it applies, but not completely nullify styles within the container interpolation.
 
 ### Animation attachment to a container
 
@@ -286,21 +257,21 @@ This direction is more aligned with scroll-timeline. It is designed to mirror th
 
 ## Workaround
 
-A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `100cqi / 1px` portion of animation delay)_ to function propertly:
+A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `/ 1px` portions of animation delay)_ to function propertly:
 
 ```css
 article {
   container-type: inline-size;
 }
 .headline {
-    --min: 200;
-    --max: 800;
+    --min: 10rem;
+    --max: 40rem;
     --name: headline;
     --timing-function: ease-in-out;
     animation:
       1s
       var(--timing-function, linear)
-      calc(-1s * (100cqi / 1px - var(--min, 0)) / (var(--max, 0) - var(--min, 0)))
+      calc(-1s * (100cqi - var(--min, 0) / 1px) / ((var(--max, 0) - var(--min, 0)) / 1px))
       1
       both
       paused
