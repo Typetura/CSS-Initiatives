@@ -328,7 +328,8 @@ Any time you change font size you run the risk of falling out of compliance with
 
 ## References & acknowledgements
 
-- [Miriam Suzanne](https://css.oddbird.net) for proposal collaboration
+- [Miriam Suzanne](https://css.oddbird.net/) for proposal collaboration
+  - [interpolation notes from Miriam](https://css.oddbird.net/rwd/interpolation/)
 - [Nicole Sullivan](https://twitter.com/stubbornella) for general advice and proposal feedback
 - [Google UI Fund](https://web.dev/ui-fund/) for project support
 - [Ana Monroe](https://anamonroe.com/) for editing and design feedback
