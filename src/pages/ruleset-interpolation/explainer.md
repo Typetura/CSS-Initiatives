@@ -13,7 +13,7 @@ layout: /src/layouts/Default.astro
 
 ## Participate
 
-Please leave feedback by filing issues on [this page’s github repositiory](https://github.com/Typetura/CSS-Initiatives/issues/new?labels=ruleset+interpolation+explainer).
+Please leave feedback by filing issues on [this page’s github repository](https://github.com/Typetura/CSS-Initiatives/issues/new?labels=ruleset+interpolation+explainer).
 
 Proto implementation: [Typetura](https://github.com/typetura/typetura)
 
@@ -28,22 +28,24 @@ Proto implementation: [Typetura](https://github.com/typetura/typetura)
 - [Workaround](#workaround)
 - [Key scenarios](#key-scenarios)
   - [Reduce excessive breakpoints](#reduce-excessive-breakpoints)
-  - [Consolodate styles](#consolodate-styles)
+  - [Consolidate styles](#consolidate-styles)
   - [Changing typesetting around layout shifts](#changing-typesetting-around-layout-shifts)
   - [Smooth layout shifts on resize](#smooth-layout-shifts-on-resize)
+  - [Root sizing](#root-sizing)
+- [Accessibility](#accessibility)
 - [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
 - [References & acknowledgements](#references--acknowledgements)
 
 ## Introduction
 
-There are times when it is ideal to have a gradation of change between viewport and component sizes as opposed to specific points as defined in media queries and container queries. As more device types like watches and foldables enter the web ecosystem as well as more complex layouts being used the need for this level of control increases. This control is espeicially useful for typography and spacing within layout.
+There are times when it is ideal to have a gradation of change between viewport and component sizes as opposed to specific points defined in media queries and container queries. As more device types like watches and foldables enter the web ecosystem as well as more complex layouts being used the need for this level of control increases. This control is especially useful for [typography and spacing within layout](#key-scenarios).
 
 Currently some degree of this can be achieved with `clamp()`, but this doesn’t follow the container sizing mental model used in media/element queries, is limited to a single value, is limited to length typed units, and lacks easing control. [A workaround to gain back all this functionality](#workaround) is possible by passing container width into the delay of an animation function. There are opportunities to make this cleaner and more clear.
 
 ## Functionality goals
 
 - The ability to interpolate styles across container and viewport widths.
-- Interpolate all interpolable value types including `length`, `color`, and `number`.
+- Interpolate all interoperable value types including `length`, `color`, and `number`.
 - Define the easing of the interpolation.
 - Define the start and end size of the interpolation.
 - Ideally more than two points can be interpolated. For example an inline-size of 20rem, 40rem, and 80rem can have different rulesets.
@@ -148,7 +150,7 @@ article {
 #### Open questions
 
 -  What styles are applied when the `animation` property is used on this element?
-  - Ideally the animation would override styles styles it applies, but not completely nullify styles within the container interpolation.
+  - Ideally the animation would override styles it applies, but not completely nullify styles within the container interpolation.
 
 ### Animation attachment to a container
 
@@ -257,25 +259,23 @@ This direction is more aligned with scroll-timeline. It is designed to mirror th
 
 ## Workaround
 
-A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `/ 1px` portions of animation delay)_ to function propertly:
+A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `/ 1px` portions of animation delay)_ to function properly:
 
 ```css
 article {
   container-type: inline-size;
 }
 .headline {
+    animation-name: headline;
+    animation-timing-function: ease-in-out;
     --min: 10rem;
     --max: 40rem;
-    --name: headline;
-    --timing-function: ease-in-out;
-    animation:
-      1s
-      var(--timing-function, linear)
-      calc(-1s * (100cqi - var(--min, 0) / 1px) / ((var(--max, 0) - var(--min, 0)) / 1px))
-      1
-      both
-      paused
-      var(--name, none);
+
+    animation-delay: calc(-1s * (100cqi - var(--min, 0) / 1px) / ((var(--max, 0) - var(--min, 0)) / 1px));
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+    animation-play-state: paused;
 }
 @keyframes headline {
   from {
@@ -291,7 +291,7 @@ article {
 }
 ```
 
-This is the same code Typetura uses, except it uses JavaScript to attach `resizeObserver`s to container elements, passwing a `var(--width)` value into the animation delay function for better browser support.
+This is the same code Typetura uses, except it uses JavaScript to attach `resizeObserver`s to container elements, passing a `var(--width)` value into the animation delay function for better browser support.
 
 ## Key scenarios
 
@@ -300,17 +300,25 @@ This is the same code Typetura uses, except it uses JavaScript to attach `resize
 Currently the following websites use numerous breakpoints to define how typesetting changes at different screen sizes:
 [The Outline](https://theoutline.com/), [HEX](https://hex.xyz/Margo/) and [Elliot Jay Stocks](https://elliotjaystocks.com/).
 
-### Consolodate styles
+### Consolidate styles
 
-[The Atlantic](https://www.theatlantic.com/) has a typographically rich home page on desktop with headlines of various sizes based on their container size. All of these headline styles could be consolodated into one interpolated ruleset for this layout with the additional bonus of working across viewport sizes. Here is a demo of [The Atlantic with an interpolated headline style](https://demos.typetura.com/the-atlantic).
+[The Atlantic](https://www.theatlantic.com/) has a typographically rich home page on desktop with headlines of various sizes based on their container size. All of these headline styles could be consolidated into one interpolated ruleset for this layout with the additional bonus of working across viewport sizes. Here is a demo of [The Atlantic with an interpolated headline style](https://demos.typetura.com/the-atlantic).
 
 ### Changing typesetting around layout shifts
 
-The [Stripe](https://stripe.com/) home page changes it’s type styles for a layout shift. If these styles were interpolated and bound to the text container itself, then as the layout shift happens the text would automatically resize appropriately. Here is an example of [what this type of layout might look like with interpolated styles](https://demos.typetura.com/magazine.html).
+The [Stripe](https://stripe.com/) home page changes its type styles for a layout shift. If these styles were interpolated and bound to the text container itself, then as the layout shift happens the text would automatically resize appropriately. Here is an example of [what this type of layout might look like with interpolated styles](https://demos.typetura.com/magazine.html).
 
 ### Smooth layout shifts on resize
 
 Lynn Fisher used Typetura to interpolate rulesets with CSS for [her latest 2021 website redesign](https://lynnandtonic.com/). This would all be possible natively in CSS with ruleset interpolation. Additionally more subtle applications of this can be applied, like the way the floating images slide in and out of the text column where there is space on [this “Explore” demo](https://demos.typetura.com/magazine.html).
+
+### Root sizing
+
+As devices get increasingly small, controlling page scaling with the root font size is more useful. Because most websites don’t work well on watches, Apple adapts them for smaller screens unless `<meta name="disable-adaptations" content="watch">` is in the `<head>`. The ideal solution here is interpolating the root font size with an `ease-out` timing function. You can see how [the “Explore” demo](https://demos.typetura.com/magazine.html) scales to extremely small sizes.
+
+## Accessibility
+
+Any time you change font size you run the risk of falling out of compliance with WCAG SC 1.4.4 and this still holds true with this feature. The success criteria may change in the future based on this open [issue with the WCAG on 1.4.4](https://github.com/w3c/wcag/issues/1671). There is currently no way to identify and compensate for page scaling accessibility issues on desktop browsers (cmd +) and there is an open issue on how we might surface and solve for [page scaling issues here](https://github.com/w3c/csswg-drafts/issues/6869).
 
 ## Stakeholder Feedback / Opposition
 
@@ -320,16 +328,16 @@ Lynn Fisher used Typetura to interpolate rulesets with CSS for [her latest 2021 
 
 ## References & acknowledgements
 
-- Miriam Suzanne for proposal collaboration
-- Nicole Sullivan for general advice and proposal feedback
-- Google UI Fund for project support
-- Ana Monroe for editing and design feedback
+- [Miriam Suzanne](https://css.oddbird.net) for proposal collaboration
+- [Nicole Sullivan](https://twitter.com/stubbornella) for general advice and proposal feedback
+- [Google UI Fund](https://web.dev/ui-fund/) for project support
+- [Ana Monroe](https://anamonroe.com/) for editing and design feedback
 
 #### Additional thanks to support, feedback, and inspiration from
 
-- Florian Schulz
-- Jen Simmons
-- Tim Brown
+- [Tim Brown](https://tbrown.org/)
+- [Florian Schulz](https://florianschulz.info/)
+- [Jen Simmons](https://jensimmons.com/)
 
 ## Changelog
 
