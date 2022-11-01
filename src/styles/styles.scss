@@ -1,6 +1,6 @@
-@import 'base';
-@import 'typetura';
+@forward 'base';
+@forward 'typetura';
 
-@import 'components/Header';
-@import 'components/Nav';
-@import 'components/Footer';
+@forward 'components/Header';
+@forward 'components/Nav';
+@forward 'components/Footer';
