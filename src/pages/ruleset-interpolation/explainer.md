@@ -15,9 +15,94 @@ layout: /src/layouts/Default.astro
 
 Please leave feedback by filing issues on [this page’s github repositiory](https://github.com/Typetura/CSS-Initiatives/issues/new?labels=ruleset+interpolation+explainer).
 
-Proto implementations: [Typetura](https://github.com/typetura/typetura)
+Proto implementation: [Typetura](https://github.com/typetura/typetura)
 
-A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `100cqi / 1px` portion of animation delay)_ to function propertly:
+## Table of contents
+
+- [Introduction](#introduction)
+- [Functionality goals](#functionality-goals)
+- [Proposed solutions](#proposed-solutions)
+  - [Container-animation](#container-animation)
+  - [Animation attachment to a container](#animation-attachment-to-a-container)
+  - [Animation timeline](#animation-timeline)
+- [Workaround](#workaround)
+- [Key scenarios](#key-scenarios)
+  - [Reduce excessive breakpoints](#reduce-excessive-breakpoints)
+  - [Consolodate styles](#consolodate-styles)
+  - [Changing typesetting around layout shifts](#changing-typesetting-around-layout-shifts)
+  - [Smooth layout shifts on resize](#smooth-layout-shifts-on-resize)
+- [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
+- [References & acknowledgements](#references--acknowledgements)
+
+## Introduction
+
+There are times when it is ideal to have a gradation of change between viewport and component sizes as opposed to specific points as defined in media queries and container queries. As more device types like watches and foldables enter the web ecosystem as well as more complex layouts being used the need for this level of control increases. This control is espeicially useful for typography and spacing within layout.
+
+Currently some degree of this can be achieved with `clamp()`, but this doesn’t follow the container sizing mental model used in media/element queries, is limited to a single value, is limited to length typed units, and lacks easing control. [A workaround to gain back all this functionality](#workaround) is possible by passing container width into the delay of an animation function. There are opportunities to make this cleaner and more clear.
+
+## Functionality goals
+
+- The ability to interpolate styles across container and viewport widths.
+- Interpolate all interpolable value types including `length`, `color`, and `number`.
+- Define the easing of the interpolation.
+- Define the start and end size of the interpolation.
+- Ideally more than two points can be interpolated. For example an inline-size of 20rem, 40rem, and 80rem can have different rulesets.
+- Ideally multiple properties can be interpolated at once. It’s rare that I need only one `property: value` pair to change at a time.
+
+## Example
+
+<div class="typetura demo" id="demo">
+    <h1 class="headline">Resize me</h1>
+</div>
+<style>
+.demo {
+    position: relative;
+    display: inline-block;
+    width: 25rem;
+    max-width: 100%;
+    height: 10rem;
+    border-radius: 0.25rem;
+    background-color: #eee;
+    resize: horizontal;
+    overflow: hidden;
+}
+.headline {
+    --min: 200;
+    --max: 800;
+    margin-block: 2rem;
+    line-height: 1;
+    animation: 1s ease-in-out calc(-1s * (var(--width, 0) - var(--min)) / (var(--max) - var(--min))) 1 both paused headline;
+}
+@keyframes headline {
+  from {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: hsl(330, 96%, 15%);
+  }
+  to {
+    transform: 3rem;
+    font-weight: 600;
+    color: hsl(330, 96%, 45%);
+  }
+}
+</style>
+<script>
+    let demo = document.getElementById('demo');
+    const resizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+        if (entry.contentBoxSize) {
+        // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+        const contentBoxSize = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0] : entry.contentBoxSize;
+        entry.target.style.setProperty('--width', contentBoxSize.inlineSize);
+        }
+    }
+    });
+    resizeObserver.observe(demo);
+</script>
+
+## Proposed solutions
+
+A workaround is possible now within the latest CSS spec and is waiting for browsers to implement unit division _(the `100cqi / 1px` portion of animation delay)_ to function propertly:
 
 ```css
 article {
@@ -50,39 +135,6 @@ article {
   }
 }
 ```
-
-## Table of contents
-
-- [Introduction](#introduction)
-- [Functionality goals](#functionality-goals)
-- [Proposed solutions](#proposed-solutions)
-  - [Container-animation](#container-animation)
-  - [Animation attachment to a container](#animation-attachment-to-a-container)
-  - [Animation timeline](#animation-timeline)
-- [Key scenarios](#key-scenarios)
-  - [Reduce excessive breakpoints](#reduce-excessive-breakpoints)
-  - [Consolodate styles](#consolodate-styles)
-  - [Changing typesetting around layout shifts](#changing-typesetting-around-layout-shifts)
-  - [Smooth layout shifts on resize](#smooth-layout-shifts-on-resize)
-- [Stakeholder Feedback / Opposition](#stakeholder-feedback--opposition)
-- [References & acknowledgements](#references--acknowledgements)
-
-## Introduction
-
-Building upon media queries and container queries, there are times when it is ideal to have gradations of change between viewport and component sizes as opposed to specific points. As more device types like watches and foldables enter the web ecosystem as well as more complex layouts are being used the need for this level of control increases. This control is espeicially useful for typography and spacing within layout.
-
-Currently some degree of this can be achieved with `clamp()` but this doesn’t follow the container sizing mental model used in media/element queries, is limited to a single value, is limited to length typed units, and lacks easing control. A workaround to gain back all this functionality is possible by passing container width into the delay of an animation function but there are opportunities to make this cleaner and more clear.
-
-## Functionality goals
-
-- The ability to interpolate styles across container and viewport widths.
-- This interpolation must support all CSS interpolate types including `length`, `color`, and `number`.
-- There needs to be the ability to define the easing of the interpolation.
-- The ability to define the start and end size of the interpolation.
-- Ideally more than two points can be interpolated between. For example an inline-size of 20rem, 40rem, and 80rem can have different rulesets.
-- Ideally multiple properties can be interpolated at once. It’s rare that I need only one `property: value` pair to change at a time.
-
-## Proposed solutions
 
 ### Container-animation
 
@@ -232,6 +284,44 @@ This direction is more aligned with scroll-timeline. It is designed to mirror th
 - More verbose than [container-animation](#container-animation)
 - `fill-mode` default of `none` is not ideal
 
+## Workaround
+
+A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `100cqi / 1px` portion of animation delay)_ to function propertly:
+
+```css
+article {
+  container-type: inline-size;
+}
+.headline {
+    --min: 200;
+    --max: 800;
+    --name: headline;
+    --timing-function: ease-in-out;
+    animation:
+      1s
+      var(--timing-function, linear)
+      calc(-1s * (100cqi / 1px - var(--min, 0)) / (var(--max, 0) - var(--min, 0)))
+      1
+      both
+      paused
+      var(--name, none);
+}
+@keyframes headline {
+  from {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: hsl(330, 96%, 15%);
+  }
+  to {
+    transform: 3rem;
+    font-weight: 600;
+    color: hsl(330, 96%, 45%);
+  }
+}
+```
+
+This is the same code Typetura uses, except it uses JavaScript to attach `resizeObserver`s to container elements, passwing a `var(--width)` value into the animation delay function for better browser support.
+
 ## Key scenarios
 
 ### Reduce excessive breakpoints
@@ -260,7 +350,8 @@ Lynn Fisher used Typetura to interpolate rulesets with CSS for [her latest 2021 
 ## References & acknowledgements
 
 - Miriam Suzanne for proposal collaboration
-- Nicole Sullivan and Google UI Fund for support fast-tracking this proposal
+- Nicole Sullivan for general advice and proposal feedback
+- Google UI Fund for project support
 - Ana Monroe for editing and design feedback
 
 #### Additional thanks to support, feedback, and inspiration from
