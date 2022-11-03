@@ -15,6 +15,8 @@ layout: /src/layouts/Default.astro
 
 Please leave feedback by filing issues on [this page’s github repository](https://github.com/Typetura/CSS-Initiatives/issues/new?labels=ruleset+interpolation+explainer).
 
+Comment on the [CSSWG issue and discussion](https://github.com/w3c/csswg-drafts/issues/6245#issuecomment-926351855)
+
 Proto implementation: [Typetura](https://github.com/typetura/typetura)
 
 ## Table of contents
@@ -49,7 +51,7 @@ Currently some degree of this can be achieved with `clamp()`, but this doesn’t
 - Define the easing of the interpolation.
 - Define the start and end size of the interpolation.
 - Ideally more than two points can be interpolated. For example an inline-size of 20rem, 40rem, and 80rem can have different rulesets.
-- Ideally multiple properties can be interpolated at once. It’s rare that I need only one `property: value` pair to change at a time.
+- Ideally multiple properties can be interpolated at once. It’s rare that one will need to interpolate one `property: value` pair to change at a time.
 
 ## Example
 
@@ -82,7 +84,7 @@ Currently some degree of this can be achieved with `clamp()`, but this doesn’t
     color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 3rem;
+    font-size: 3rem;
     font-weight: 600;
     color: hsl(330, 96%, 45%);
   }
@@ -104,29 +106,35 @@ Currently some degree of this can be achieved with `clamp()`, but this doesn’t
 
 ## Proposed solutions
 
-### Container-animation
+Below are three different proposals for this functionality. I prefer the [container-animation](#container-animation-ideal-solution) direction as I find it to be the most intuitive, but there are advantages to the other two directions as well.
+
+### Container-animation (ideal solution)
 
 This proposal creates a specific property focused on container interpolation as opposed to relying on animation. This sheds the baggage of time-based logic enabling `container-keyframes` to contain length based units. This proposal was [originally discussed in this gist](https://gist.github.com/scottkellum/0c29c4722394c72d311c5045a30398e5).
+
+The biggest _pro_ for this direction is the ability to use length values as the keyframes themselves. This is extreamly intuitive and CSS authors can copy and paste styles into the keyframes to interpolate them.
+
+The biggest _con_ for this direction is that it’s largely new CSS and a bit of a departure from scroll timeline and `mix()`.
 
 ```css
 article {
   container-type: inline-size;
-  container-name: article;
 }
 
 .headline {
-  container-interpolation-name: headline;
-  container-interpolation-timing-function: ease-in-out;
+  container-timeline-name: headline;
+  container-timeline-axis: size(inline);
+  container-timeline-timing-function: ease-in-out;
 }
 
-@container-keyframes headline (article: inline-size) {
+@container-keyframes headline {
   10rem {
     font-size: 1.2rem;
     font-weight: 900;
     color: hsl(330, 96%, 15%);
   }
   40rem {
-    transform: 3rem;
+    font-size: 3rem;
     font-weight: 600;
     color: hsl(330, 96%, 45%);
   }
@@ -135,98 +143,82 @@ article {
 
 #### Advantages
 
-- A simple syntax
+- A clear and intuitive syntax
 - Relies on container query syntax and mental model
 - Length units can be used in keyframes
   - These units can also be mixed, so things can be interpolated from a size of 100px to a size of 30rem. As one example this may be useful in interpolating an icon’s appearance from its minimum pixel-based size to a size based on the text column it sits within.
-
-- Does not require duration in order to work
 - Can assume an `animation-fill-mode` of `both` as default
 
 #### Disadvantages
 
-- A whole new spec to maintain as opposed to expanding the existing animation spec.
+- A whole new spec to maintain as opposed to expanding the existing animations/scroll timeline spec
+- Diffucult to override styles in keyframes
 
 #### Open questions
 
 -  What styles are applied when the `animation` property is used on this element?
   - Ideally the animation would override styles it applies, but not completely nullify styles within the container interpolation.
 
-### Animation attachment to a container
+### Mix timeline proposal
 
-This is an extension of `animation` to allow for binding to container queries. A new function here defines the what dimension is being queried as well as the start and end points of the interpolation.
+[Fantasai drafted this proposal](https://github.com/w3c/csswg-drafts/issues/6245#issuecomment-926351855) with Miraim Suzanne that achieves most of the [functionality goals](#functionality-goals) outlined above. It expands upon the [mix proposal for interpolating values](https://github.com/w3c/csswg-drafts/issues/581#issuecomment-926353789).
+
+The biggest _pro_ for this direction is that styles can be easily overwritten in the cascade. This is an annoyance with styles in keyframes.
+
+The biggest _con_ for this direction is that it doesn’t meet the last two [functionality goals](#functionality-goals). These are ideal and not must-haves, but still a concession on functionality.
 
 ```css
 article {
   container-type: inline-size;
-  container-name: article;
+}
+
+@timeline headline {
+  type: container;
+  feature: width;
+  from: 10rem;
+  to: 40rem;
 }
 
 .headline {
-  /* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
-  /* attahment function ( container name and dimention, start size, end size ) */
-  animation-attachment: container(article inline-size, 10rem, 40rem);
-
-  /* Define the animation parameters */
-  animation-name: headline;
-  animation-timing-function: ease-in-out;
-  animation-duration: 1s;
-
-  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
-  animation-fill-mode: both;
-}
-
-/* Standard animation keyframes */
-@keyframes headline {
-  from {
-    font-size: 1.2rem;
-    font-weight: 900;
-    color: hsl(330, 96%, 15%);
-  }
-  to {
-    transform: 3rem;
-    font-weight: 600;
-    color: hsl(330, 96%, 45%);
-  }
+  font-size: mix(headline ease-in-out; 1.2rem; 3rem);
+  font-weight: mix(headline ease-in-out; 900; 600);
+  color: mix(headline ease-in-out; hsl(330, 96%, 15%); hsl(330, 96%, 45%));
 }
 ```
 
 #### Advantages
 
+- A Simple syntax
+- Easy to override styles
 - Relies on container query syntax and mental model
-- Relies on animation and keyframe syntax and mental model
-- Aligned with animation spec for future changes and maintenance
+- No need to worry about `animation-fill-mode` at all
 
 #### Disadvantages
 
-- Doesn’t allow for length based units in keyframes
-- Has time-based baggage from animations and duration needs to be defined
-- More verbose than [container-animation](#container-animation)
-- `fill-mode` default of `none` is not ideal
+- Lacks support for the following [functionality goals](#functionality-goals)
+  - Ideally more than two points can be interpolated. For example an inline-size of 20rem, 40rem, and 80rem can have different rulesets
+  - Ideally multiple properties can be interpolated at once. It’s rare that I need only one `property: value` pair to change at a time
+- While it’s very simple, it’s not as clear or intuitive
 
 ### Animation timeline
 
-This direction is more aligned with scroll-timeline. It is designed to mirror that spec, changing the syntax to `@query-timeline` as opposed to `@scroll-timeline` to define the query interpolation behavior.
+This direction is more aligned with scroll-timeline. It satisfies all of the [functionality goals](#functionality-goals).
+
+The biggest _pro_ for this direction is that it is so close to the existing scroll timeline spec. This direction feels clear and achievable.
+
+The biggest _con_ is that it’s more verbose than the other directions without adding as much clarity.
 
 ```css
-/* Set the animation timeline to start at a conatainer inline-size of 20rem and end at 80rem */
-@query-timeline article {
-  source: selector("article");
-  orientation: "inline";
-  length-offsets: 10rem 40rem;
+article {
+  view-timeline-name: article;
+  view-timeline-axis: size(inline);
 }
 
 .headline {
-  /* Set the animation timeline, much like scroll timeline is set */
+  animation: headline both ease-in-out;
   animation-timeline: article;
-
-  /* Define the animation parameters */
-  animation-name: headline;
-  animation-timing-function: ease-in-out;
-  animation-duration: 1s;
-
-  /* If fill mode is not set to `both` then the animation will apply default settings outside the boundaries set in animation-attachment */
-  animation-fill-mode: both;
+  animation-delay-start: inline-size 10rem;
+  animation-delay-end: inline-size 40rem;
 }
 
 /* Standard animation keyframes */
@@ -237,7 +229,7 @@ This direction is more aligned with scroll-timeline. It is designed to mirror th
     color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 3rem;
+    font-size: 3rem;
     font-weight: 600;
     color: hsl(330, 96%, 45%);
   }
@@ -253,9 +245,12 @@ This direction is more aligned with scroll-timeline. It is designed to mirror th
 #### Disadvantages
 
 - Doesn’t allow for length based units in keyframes
-- Has time-based baggage from animations and duration needs to be defined
-- More verbose than [container-animation](#container-animation)
 - `fill-mode` default of `none` is not ideal
+- Diffucult to override styles in keyframes
+
+#### Open questions
+
+Some details could be worked out around how `animation-timeline` and `view-timeline` work.
 
 ## Workaround
 
@@ -284,14 +279,14 @@ article {
     color: hsl(330, 96%, 15%);
   }
   to {
-    transform: 3rem;
+    font-size: 3rem;
     font-weight: 600;
     color: hsl(330, 96%, 45%);
   }
 }
 ```
 
-This is the same code Typetura uses, except it uses JavaScript to attach `resizeObserver`s to container elements, passing a `var(--width)` value into the animation delay function for better browser support.
+This is the same code Typetura uses, except Typetura uses JavaScript to attach `resizeObserver`s to container elements, passing a `var(--width)` value into the animation delay function for better browser support.
 
 ## Key scenarios
 
@@ -328,8 +323,11 @@ Any time you change font size you run the risk of falling out of compliance with
 
 ## References & acknowledgements
 
+- [Scott Kellum](https://css.typetura.com)
 - [Miriam Suzanne](https://css.oddbird.net/) for proposal collaboration
   - [interpolation notes from Miriam](https://css.oddbird.net/rwd/interpolation/)
+- [Fantasai](https://fantasai.inkedblade.net/)
+  - [Interpolation proposal comment](https://github.com/w3c/csswg-drafts/issues/6245#issuecomment-926351855)
 - [Nicole Sullivan](https://twitter.com/stubbornella) for general advice and proposal feedback
 - [Google UI Fund](https://web.dev/ui-fund/) for project support
 - [Ana Monroe](https://anamonroe.com/) for editing and design feedback
