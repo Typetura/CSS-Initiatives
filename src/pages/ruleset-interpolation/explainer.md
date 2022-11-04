@@ -24,8 +24,8 @@ Proto implementation: [Typetura](https://github.com/typetura/typetura)
 - [Introduction](#introduction)
 - [Functionality goals](#functionality-goals)
 - [Proposed solutions](#proposed-solutions)
-  - [Container-animation](#container-animation)
-  - [Animation attachment to a container](#animation-attachment-to-a-container)
+  - [Container-animation](#container-animation-ideal-solution)
+  - [Mix Timeline](#mix-timeline)
   - [Animation timeline](#animation-timeline)
 - [Workaround](#workaround)
 - [Key scenarios](#key-scenarios)
@@ -106,13 +106,13 @@ Currently some degree of this can be achieved with `clamp()`, but this doesn’t
 
 ## Proposed solutions
 
-Below are three different proposals for this functionality. I prefer the [container-animation](#container-animation-ideal-solution) direction as I find it to be the most intuitive, but there are advantages to the other two directions as well.
+Below are three different proposals to add this functionality to CSS. I prefer the [container-animation](#container-animation-ideal-solution) direction as I find it to be the most intuitive, but there are advantages to the other two directions as well. There may be aspects of the [container-animation](#container-animation-ideal-solution) proposal that can be adapted to the [animation-timeline](#animation-timeline) proposal like using lengths as keyframes. At this stage I think it’s important to cast a wide net, assess advantages and disadvantages of differing approaches that we can consolidate and refine.
 
 ### Container-animation (ideal solution)
 
 This proposal creates a specific property focused on container interpolation as opposed to relying on animation. This sheds the baggage of time-based logic enabling `container-keyframes` to contain length based units. This proposal was [originally discussed in this gist](https://gist.github.com/scottkellum/0c29c4722394c72d311c5045a30398e5).
 
-The biggest _pro_ for this direction is the ability to use length values as the keyframes themselves, so it’s clear what context you are in and what is changing within that context.
+The biggest _pro_ for this direction is the ability to use length values as the keyframes themselves, so it’s clear what context you are in and what is changing within that context. I think the added clarity of having length units in the keyframes is worth pursuing. CSS authors spend far too much time in online calculators to generate values that CSS itself could be making more plain. This is a huge problem with `clamp()` right now.
 
 The biggest _con_ for this direction is that it’s largely new CSS and a bit of a departure from scroll timeline and `mix()`.
 
@@ -245,7 +245,10 @@ article {
 #### Disadvantages
 
 - Doesn’t allow for length based units in keyframes
-- `fill-mode` default of `none` is not ideal
+  - Making a change here to allow keyframes to support `length` values would be much more intuitive for both scroll-linked animations and interpolated rulesets based on container with. Otherwise you are asking CSS authors to do the calculations when the browser could be doing them.
+
+- `fill-mode` default of `none` is not ideal.  A fill mode of `both` produces the best results.
+
 - Diffucult to override styles in keyframes
 
 #### Open questions
