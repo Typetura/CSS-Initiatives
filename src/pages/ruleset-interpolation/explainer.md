@@ -112,7 +112,7 @@ Below are three different proposals for this functionality. I prefer the [contai
 
 This proposal creates a specific property focused on container interpolation as opposed to relying on animation. This sheds the baggage of time-based logic enabling `container-keyframes` to contain length based units. This proposal was [originally discussed in this gist](https://gist.github.com/scottkellum/0c29c4722394c72d311c5045a30398e5).
 
-The biggest _pro_ for this direction is the ability to use length values as the keyframes themselves. This is extreamly intuitive and CSS authors can copy and paste styles into the keyframes to interpolate them.
+The biggest _pro_ for this direction is the ability to use length values as the keyframes themselves, so it’s clear what context you are in and what is changing within that context.
 
 The biggest _con_ for this direction is that it’s largely new CSS and a bit of a departure from scroll timeline and `mix()`.
 
@@ -159,7 +159,7 @@ article {
 -  What styles are applied when the `animation` property is used on this element?
   - Ideally the animation would override styles it applies, but not completely nullify styles within the container interpolation.
 
-### Mix timeline proposal
+### Mix timeline
 
 [Fantasai drafted this proposal](https://github.com/w3c/csswg-drafts/issues/6245#issuecomment-926351855) with Miraim Suzanne that achieves most of the [functionality goals](#functionality-goals) outlined above. It expands upon the [mix proposal for interpolating values](https://github.com/w3c/csswg-drafts/issues/581#issuecomment-926353789).
 
@@ -339,6 +339,10 @@ Any time you change font size you run the risk of falling out of compliance with
 - [Jen Simmons](https://jensimmons.com/)
 
 ## Changelog
+
+### 2022.11.3
+
+- Rewrite of proposals after feedback from Miriam and more research done on how the scroll timeline spec has changed.
 
 ### 2022.10.31
 
