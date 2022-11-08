@@ -256,7 +256,7 @@ Some details could be worked out around how `animation-timeline` and `view-timel
 
 ## Workaround
 
-A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement unit division _(the `/ 1px` portions of animation delay)_ to function properly:
+A workaround is possible now according to the latest CSS spec and is waiting for browsers to implement [unit division](https://www.w3.org/TR/css-values-4/#calc-type-checking) _(the `/ 1px` portions of animation delay)_ to function properly:
 
 ```css
 article {
