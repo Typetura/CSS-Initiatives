@@ -9,7 +9,6 @@ layout: /src/layouts/Default.astro
 ## Authors
 
 - Scott Kellum
-- Miriam Suzanne
 
 ## Participate
 
