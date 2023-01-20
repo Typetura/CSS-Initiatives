@@ -46,6 +46,7 @@ This is a prioritized list of CSS modules that have been specced but are not imp
      [![A comparison of font-size between two different pieces of text.](/images/font-size-ex-height-example.png)](https://codepen.io/scottkellum/pen/zYjgRpZ)
 
    - Also [see this thread between Chris Armstrong and Una on Twitter](https://twitter.com/Armstrong/status/1583458332681338880), Chris created this [fantastic video describing the need for x-height based font sizing in detail](https://twitter.com/Armstrong/status/1583555898047201280).
+   - [Myndex’s issue on font-sizing by x-height](https://github.com/w3c/csswg-drafts/issues/6709).
 
 ## [Research board](https://arc.net/e/6050A8B9-2B0C-44AB-A911-6F12E4862031)
 
@@ -54,3 +55,4 @@ This is a prioritized list of CSS modules that have been specced but are not imp
 - [Interpolation between breakpoints](https://github.com/w3c/csswg-drafts/issues/6245) (fluid type)
 - [Query page zoom to compensate for text sizing adjustments](https://github.com/w3c/csswg-drafts/issues/6869) (Accessibility with fluid type)
 - [Control justification settings](https://github.com/w3c/csswg-drafts/issues/7738)
+- [Myndex’s issue on font-sizing by x-height](https://github.com/w3c/csswg-drafts/issues/6709)
