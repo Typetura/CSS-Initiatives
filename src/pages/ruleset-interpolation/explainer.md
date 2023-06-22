@@ -268,7 +268,7 @@ article {
     --min: 10rem;
     --max: 40rem;
 
-    animation-delay: calc(-1s * (100cqi - var(--min, 0) / 1px) / ((var(--max, 0) - var(--min, 0)) / 1px));
+    animation-delay: calc(-1s * ((100cqi - var(--min, 0)) / 1px) / ((var(--max, 0) - var(--min, 0)) / 1px));
     animation-duration: 1s;
     animation-iteration-count: 1;
     animation-fill-mode: both;
