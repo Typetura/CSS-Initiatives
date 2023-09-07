@@ -24,7 +24,7 @@ This is a prioritized list of CSS modules that have been specced but are not imp
    - Baseline grids in CSS are helpful to keep text across multiple columns cleanly aligned.
    - Note [this issue with the headline examples in the spec](https://github.com/w3c/csswg-drafts/issues/6025).
 1. [Initial Letters](https://www.w3.org/TR/css-inline/#initial-letter-styling)
-1. [Leading trim](https://css-tricks.com/leading-trim-the-future-of-digital-typesetting/)
+1. [Text box trim](https://css-tricks.com/leading-trim-the-future-of-digital-typesetting/)
    - Helpful to align the first or last line of text with the container or other content on the page.
 
 \*`text-justify` and `hyphens` are blocking `text-align: justify` from being acceptable to use.
